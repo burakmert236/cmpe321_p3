@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h3 Login as #{type}
+  p.error #{error}
+    style(type='text/css').
+            .error {
+                color: red;
+            }
+  form(action=("/login?type=" + type) method="POST")
+    p Username:
+      input(type="text" name="username" placeholder="")
+    p Password:
+      input(type="text" name="password" placeholder="")
+    input(type="submit")
