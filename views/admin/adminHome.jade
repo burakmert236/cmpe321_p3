@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+  p Choose an operation, #{user.username}
+  ul
+    li 
+      a(href='/database_manager/new_user') Add new User
+    li 
+      a(href='/database_manager/delete_student') Delete Student
+    li 
+      a(href='/database_manager/update_title') Update title of an Instructor
+    li 
+      a(href='/database_manager/students') View all Students
+    li 
+      a(href='/database_manager/instructors') View all Instructors
+    li 
+      a(href='/database_manager/student_grade') View grades of a Student
+    li 
+      a(href='/database_manager/instructor_course') View courses of an Instructor
+    li 
+      a(href='/database_manager/avg_grade') View grade average of a Course

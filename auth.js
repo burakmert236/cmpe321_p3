@@ -34,23 +34,17 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
-    console.log(user)
-    done(null, user.username); 
+    const type = (user.title || user.name) ? "user" : "database_manager"
+    done(null, {username: user.username, type}); 
 });
 
 // used to deserialize the user
-passport.deserializeUser(function(username, done) {
-    console.log(username)
-    const sql_query1 = `
-        SELECT * FROM Database_Manager
-        WHERE username = "${username}"`;
-    const sql_query2 = `
-        SELECT * FROM Database_Manager
-        WHERE username = "${username}"`;
-    con.query(sql_query1, function (err, result, fields) {
-        if(result.length !== 0) done(err, result[0]);
-    });
-    con.query(sql_query2, function (err, result, fields) {
+passport.deserializeUser(function(info, done) {
+    const sql_query = `
+        SELECT * FROM ${info.type}
+        WHERE username = "${info.username}"`;
+
+    con.query(sql_query, function (err, result, fields) {
         if(result.length !== 0) done(err, result[0]);
     });
 });
