@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+  h3 Create new instructor
+  p.error #{message}
+    style(type='text/css').
+            .error {
+                color: red;
+            }
+  form(action=("/database_manager/new_instructor") method="POST")
+    p Username:
+      input(type="text" name="username" placeholder="")
+    p Password:
+      input(type="text" name="password" placeholder="")
+    p Email:
+      input(type="text" name="email" placeholder="")
+    p Name:
+      input(type="text" name="name" placeholder="")
+    p Surname:
+      input(type="text" name="surname" placeholder="")
+    p Title:
+      select( name="title")
+        option(value="Assistant Professor") Assistant Professor
+        option(value="Associate Professor") Associate Professor
+        option(value="Professor") Professor
+    input(type="submit")
+
+
+script.

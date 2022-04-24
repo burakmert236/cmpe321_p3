@@ -1,0 +1,8 @@
+extends ../layout
+
+block content
+  p List of all instructors
+  ul
+   each instructor in instructors
+     li
+       p #{instructors.username} #{instructors.name}

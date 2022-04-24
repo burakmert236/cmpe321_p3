@@ -1,7 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var { capitalize } = require('../helpers');
-var { getStudents } = require('../queries/adminQueries');
+var con = require('../db_config');
+var { 
+  getStudents,
+  getInstructors,
+  createStudent,
+  createInstructor,
+} = require('../queries/adminQueries');
 
 /* GET admin home page. */
 router.get('/', function(req, res, next) {
@@ -10,11 +16,43 @@ router.get('/', function(req, res, next) {
   return res.send("You are not an admin")
 });
 
-/* GET add new user form. */
-router.get('/new_user', function(req, res, next) {
+/* GET add new student form. */
+router.get('/new_student', function(req, res, next) {
   const user = req.user;
-  if(user) return res.render('admin/newUser', { user, title: "Database Manager Home Page" })
+  if(user) return res.render('admin/newStudent', { user, title: "Database Manager Home Page" })
   return res.send("You are not an admin")
+});
+/* POST add new student. */
+router.post('/new_student', function(req, res, next) {
+  createStudent(req.body, function(result) {
+    console.log(result)
+    let message = ""
+    if(result) {
+      message = "Student created successfuly"
+    } else {
+      message = "Student couldn't created successfuly"
+    }
+    return res.render('admin/newStudent', { title: "Database Manager Home Page", message })
+  });
+});
+
+/* GET add new instructor form. */
+router.get('/new_instructor', function(req, res, next) {
+  const user = req.user;
+  if(user) return res.render('admin/newInstructor', { user, title: "Database Manager Home Page" })
+  return res.send("You are not an admin")
+});
+/* POST add new instructor. */
+router.post('/new_instructor', function(req, res, next) {
+  createInstructor(req.body, function(result) {
+    let message = ""
+    if(result) {
+      message = "Instructor created successfuly"
+    } else {
+      message = "Instructor couldn't created successfuly"
+    }
+    return res.render('admin/newInstructor', { title: "Database Manager Home Page", message })
+  });
 });
 
 /* GET delete student form. */
@@ -44,7 +82,10 @@ router.get('/students', function(req, res, next) {
 /* GET list of instructors page. */
 router.get('/instructors', function(req, res, next) {
   const user = req.user;
-  if(user) return res.render('admin/instructors', { user, title: "Database Manager Home Page" })
+  if(user) {
+    const instructors = getInstructors();
+    return res.render('admin/instructors', { user, title: "Database Manager Home Page", instructors })
+  }
   return res.send("You are not an admin")
 });
 
