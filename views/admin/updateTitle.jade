@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+  h3 Update title of an Instructor
+  p.error #{message}
+    style(type='text/css').
+            .error {
+                color: red;
+            }
+  form(action=("/database_manager/update_title") method="POST")
+    p Instructor Username:
+      input(type="text" name="username" placeholder="")
+    p New Title:
+      select( name="title")
+        option(value="Assistant Professor") Assistant Professor
+        option(value="Associate Professor") Associate Professor
+        option(value="Professor") Professor
+    input(type="submit" value="Update") 
+
+
+script.

@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+  h3 Delete a Student
+  p.error #{message}
+    style(type='text/css').
+            .error {
+                color: red;
+            }
+  form(action=("/database_manager/delete_student") method="POST")
+    p Student ID:
+      input(type="text" name="student_id" placeholder="")
+    input(type="submit" value="Delete") 
+
+
+script.

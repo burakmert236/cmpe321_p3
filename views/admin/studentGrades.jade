@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+	p.error #{message}
+		style(type='text/css').
+			.error {
+				color: red;
+			}
+
+	if !courses
+		form(action=("/database_manager/student_grade") method="POST")
+			p Student ID:
+				input(type="text" name="student_id" placeholder="")
+			input(type="submit" value="Submit") 
+	else 
+		p List of all courses Student(#{student}) takes
+		ul
+		each course in courses
+			li
+				p #{course.course_id} #{course.name} #{course.grade}

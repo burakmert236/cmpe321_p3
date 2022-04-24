@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+	p.error #{message}
+		style(type='text/css').
+			.error {
+				color: red;
+			}
+
+	if avg === null
+		form(action=("/database_manager/avg_grade") method="POST")
+			p Course ID:
+				input(type="text" name="course_id" placeholder="")
+			input(type="submit" value="Submit") 
+	else 
+		p Average grade of Course(#{course})
+		p #{avg}
