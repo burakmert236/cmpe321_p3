@@ -7,11 +7,11 @@ var { capitalize } = require('../helpers');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   const type = req.query.type;
-  res.render('loginForm', { type: capitalize(type) });
+  res.render('loginForm', { type });
 });
 
 router.post('/', passport.authenticate('local', { failureRedirect: '/' }), function(req, res, next) {
-  res.redirect(`/${req.query.type.toLocaleLowerCase()}`)
+  res.redirect(`/${req.query.type}`)
 });
 
 module.exports = router;

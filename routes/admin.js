@@ -1,7 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var { capitalize } = require('../helpers');
-var con = require('../db_config');
 var { 
   getStudents,
   getInstructors,

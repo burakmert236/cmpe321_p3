@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+  p Choose an operation, #{user.username}
+  ul
+    li 
+      a(href='/instructor/available_classroom') Find an Available Classroom
+    li 
+      a(href='/instructor/new_course') Add new Course
+    li 
+      a(href='/instructor/new_prerequisite') Add new Prerequisite
+    li 
+      a(href='/instructor/courses') View all Courses you give
+    li 
+      a(href='/instructor/students') View all of your Students
+    li 
+      a(href='/instructor/update_name') Update name of a Course
+    li 
+      a(href='/instructor/grade_student') Grade a Student
