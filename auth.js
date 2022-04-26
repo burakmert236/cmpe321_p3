@@ -1,6 +1,9 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const con = require('./db_config');
+var crypto = require('crypto');
+var algorithm = 'aes-256-ctr';
+var crypt_password = 'd6F3Efeq';
 
 passport.use(new LocalStrategy(
     {
@@ -8,6 +11,11 @@ passport.use(new LocalStrategy(
     },
     function(req, username, password, done) {
         const type = req.query.type.toLocaleLowerCase();
+
+        var cipher = crypto.createCipher(algorithm, crypt_password)
+        var crypted = cipher.update(password,'utf8','hex')
+        crypted += cipher.final('hex');
+        console.log(password, crypted)
 
         const sql_query = type === "database_manager" ?
         `
@@ -17,9 +25,11 @@ passport.use(new LocalStrategy(
         `
             SELECT * 
             FROM User
-            WHERE username = "${username}" AND password = "${password}" AND 
+            WHERE username = "${username}" AND password = "${crypted}" AND 
             username IN(SELECT username FROM ${type})
         `;
+
+        console.log(sql_query)
 
         con.query(sql_query, function (err, result, fields) {
             console.log(err, result)
@@ -34,7 +44,7 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
-    const type = (user.title || user.name) ? "user" : "database_manager"
+    const type = (user.title || user.name) ? "user" : "database_manager"
     done(null, {username: user.username, type}); 
 });
 

@@ -1,4 +1,7 @@
 var con = require('../db_config');
+var crypto = require('crypto');
+var algorithm = 'aes-256-ctr';
+var password = 'd6F3Efeq';
 
 const getStudents = (cb) => {
     const query = `
@@ -28,9 +31,14 @@ const getInstructors = (cb) => {
 };
 
 const createStudent = (body, cb) => {
+
+    var cipher = crypto.createCipher(algorithm, password)
+    var crypted = cipher.update(body.password,'utf8','hex')
+    crypted += cipher.final('hex');
+
     const query = `
         INSERT INTO User (username, name, surname, password, email)
-        VALUES ("${body.username}", "${body.name}", "${body.surname}", "${body.password}", "${body.email}");
+        VALUES ("${body.username}", "${body.name}", "${body.surname}", "${crypted}", "${body.email}");
         INSERT INTO Student (username, completed_credits, GPA)
         VALUES ("${body.username}", 0, 0);
         `
@@ -41,9 +49,14 @@ const createStudent = (body, cb) => {
 }
 
 const createInstructor = (body, cb) => {
+
+    var cipher = crypto.createCipher(algorithm, password)
+    var crypted = cipher.update(body.password,'utf8','hex')
+    crypted += cipher.final('hex');
+
     const query = `
         INSERT INTO User (username, name, surname, password, email)
-        VALUES ("${body.username}", "${body.name}", "${body.surname}", "${body.password}", "${body.email}");
+        VALUES ("${body.username}", "${body.name}", "${body.surname}", "${crypted}", "${body.email}");
         INSERT INTO Instructor (username, title)
         VALUES ("${body.username}", "${body.title}");
         `

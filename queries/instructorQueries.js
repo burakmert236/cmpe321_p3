@@ -109,10 +109,11 @@ const gradeStudent = (username, body, cb) => {
     const query = `
         UPDATE Takes
         SET grade = ${body.grade}
-        WHERE course_id = "${body.course_id}" AND student_id = "${body.student_id}"
+        WHERE course_id = "${body.course_id}" AND student_id = ${body.student_id}
             AND EXISTS (SELECT * FROM Gives WHERE username = "${username}" AND course_id = "${body.course_id}")
 
     `
+    console.log(query)
     con.query(query, function (err, result, fields) {
         console.log(err, result)
         err || result.affectedRows === 0 ? cb(false) : cb(true);

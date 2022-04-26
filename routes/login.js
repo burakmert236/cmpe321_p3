@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var con = require('../db_config');
 var passport = require('../auth');
-var { capitalize } = require('../helpers');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
