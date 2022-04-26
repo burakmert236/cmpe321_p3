@@ -14,3 +14,8 @@ a {
 li {
   margin: 20px;
 }
+
+table, th, td {
+  border: 1px solid;
+  padding: 10px;
+}

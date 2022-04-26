@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+  h3 Update name of a course
+  p.error #{message}
+    style(type='text/css').
+            .error {
+                color: red;
+            }
+  form(action=(`/instructor/update_name?name=${user.username}`) method="POST")
+    p Course ID:
+      input(type="text" name="course_id" placeholder="")
+    p New Course Name:
+      input(type="text" name="name" placeholder="")
+    input(type="submit")

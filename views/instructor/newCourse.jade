@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  h3 Create new course
+  p.error #{message}
+    style(type='text/css').
+            .error {
+                color: red;
+            }
+  form(action=(`/instructor/new_course?name=${user.username}`) method="POST")
+    p Course ID:
+      input(type="text" name="course_id" placeholder="")
+    p Name:
+      input(type="text" name="name" placeholder="")
+    p Credits:
+      input(type="text" name="credits" placeholder="")
+    p Classroom ID:
+      input(type="text" name="classroom_id" placeholder="")
+    p Time Slot:
+      input(type="text" name="time_slot" placeholder="")
+    p Quota:
+      input(type="text" name="quota" placeholder="")
+    input(type="submit")

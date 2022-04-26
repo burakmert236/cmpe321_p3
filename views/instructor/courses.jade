@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+    p.error #{message}
+        style(type='text/css').
+            .error {
+                color: red;
+            }
+
+    p List of all students takes Course(#{course_id}): #{slot}
+    table   
+        thead
+            tr
+                th Course ID
+                th Course Name
+                th Classroom ID 
+                th Time Slot
+                th Quota
+        tbody
+            each course in courses
+                tr
+                    td= course.course_id
+                    td= course.name
+                    td= course.classroom_id
+                    td= course.time_slot
+                    td= course.quota

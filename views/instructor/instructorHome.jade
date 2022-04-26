@@ -4,16 +4,16 @@ block content
   p Choose an operation, #{user.username}
   ul
     li 
-      a(href='/instructor/available_classroom') Find an Available Classroom
+      a(href=`/instructor/available_classroom?name=${user.username}`) Find an Available Classroom
     li 
-      a(href='/instructor/new_course') Add new Course
+      a(href=`/instructor/new_course?name=${user.username}`) Add new Course
     li 
-      a(href='/instructor/new_prerequisite') Add new Prerequisite
+      a(href=`/instructor/new_prerequisite?name=${user.username}`) Add new Prerequisite
     li 
-      a(href='/instructor/courses') View all Courses you give
+      a(href=`/instructor/courses?name=${user.username}`) View all Courses you give
     li 
-      a(href='/instructor/students') View all of your Students
+      a(href=`/instructor/students?name=${user.username}`) View all of your Students
     li 
-      a(href='/instructor/update_name') Update name of a Course
+      a(href=`/instructor/update_name?name=${user.username}`) Update name of a Course
     li 
-      a(href='/instructor/grade_student') Grade a Student
+      a(href=`/instructor/grade_student?name=${user.username}`) Grade a Student

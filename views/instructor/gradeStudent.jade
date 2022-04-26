@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+  h3 Grade a student
+  p.error #{message}
+    style(type='text/css').
+            .error {
+                color: red;
+            }
+  form(action=(`/instructor/grade_student?name=${user.username}`) method="POST")
+    p Course ID:
+      input(type="text" name="course_id" placeholder="")
+    p Student ID:
+      input(type="text" name="student_id" placeholder="")
+    p Grade:
+      input(type="text" name="grade" placeholder="")
+    input(type="submit")

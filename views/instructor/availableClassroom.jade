@@ -24,7 +24,15 @@ block content
 			input(type="submit" value="Submit") 
 	else 
 		p List of all available classrooms for slot: #{slot}
-		ul
-		each classroom in classrooms
-			li
-				p #{classroom.classroom_id} #{classroom.campus} #{classroom.capacity}
+		table
+			thead
+				tr
+					th Classroom ID
+					th Campus
+					th Capacity
+			tbody
+				each classroom in classrooms
+					tr
+						td= classroom.classroom_id
+						td= classroom.campus
+						td= classroom.capacity
