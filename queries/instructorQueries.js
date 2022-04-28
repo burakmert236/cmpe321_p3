@@ -1,7 +1,6 @@
 var con = require('../db_config');
 
 const createCourse = (username, body, cb) => {
-    // first part not correct, must be checked
     const query = `
         INSERT INTO Course (course_id, name, credits, quota)
         SELECT "${body.course_id}" AS course_id, "${body.name}" AS name, ${body.credits} AS credits, ${body.quota} AS quota
@@ -22,7 +21,6 @@ const createCourse = (username, body, cb) => {
 } 
 
 const availableClassrooms = (body, cb) => {
-    // first part not correct, must be checked
     const query = `
         SELECT Cls.classroom_id, Cls.campus, Cls.capacity
         FROM Classroom Cls
@@ -59,12 +57,17 @@ const createPrerequisite = (body, cb) => {
 } 
 
 const getCourses = (username, cb) => {
-    // first part not correct, must be checked
     const query = `
-        SELECT C.course_id, C.name, C.quota, Gvn.classroom_id, Gvn.time_slot
+        SELECT C.course_id, C.name, Gvn.classroom_id, Gvn.time_slot, C.quota, Group_Concat(P.prerequisite_id SEPARATOR ", ") AS pre_list
+        FROM Course C, Is_Given_In Gvn, Gives G, Course Pres, Prerequisite_Of P
+        WHERE G.username = "${username}" AND G.course_id = C.course_id AND Gvn.course_id = C.course_id AND
+            G.course_id = Gvn.course_id AND P.course_id = C.course_id AND Pres.course_id = P.course_id
+        GROUP BY C.course_id
+        UNION
+        SELECT C.course_id, C.name, Gvn.classroom_id, Gvn.time_slot, C.quota, "" AS pre_list
         FROM Course C, Is_Given_In Gvn, Gives G
         WHERE G.username = "${username}" AND G.course_id = C.course_id AND Gvn.course_id = C.course_id AND
-            G.course_id = Gvn.course_id
+            G.course_id = Gvn.course_id AND C.course_id NOT IN (SELECT C.course_id from Course C, Prerequisite_Of P where C.course_id = P.course_id)
 
     `
     con.query(query, function (err, result, fields) {
@@ -89,7 +92,6 @@ const getStudents = (username, body, cb) => {
 } 
 
 const updateName = (username, body, cb) => {
-    // first part not correct, must be checked
     const query = `
         UPDATE Course
         SET name = "${body.name}"
@@ -105,7 +107,6 @@ const updateName = (username, body, cb) => {
 
 
 const gradeStudent = (username, body, cb) => {
-    // first part not correct, must be checked
     const query = `
         UPDATE Takes
         SET grade = ${body.grade}

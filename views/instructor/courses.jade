@@ -7,7 +7,7 @@ block content
                 color: red;
             }
 
-    p List of all students takes Course(#{course_id}): #{slot}
+    p List of all courses you give
     table   
         thead
             tr
@@ -16,6 +16,7 @@ block content
                 th Classroom ID 
                 th Time Slot
                 th Quota
+                th Prerequisite List
         tbody
             each course in courses
                 tr
@@ -24,3 +25,4 @@ block content
                     td= course.classroom_id
                     td= course.time_slot
                     td= course.quota
+                    td= course.pre_list
